@@ -1,2 +1,3 @@
 # CrackingCoding
-Java/C++ solutions to Cracking the Coding Interview Questions, 5th edition. 
+150 questions from the "Cracking the Coding Interview" book, 5th edition.  
+All answer code is written in Java or C++.
