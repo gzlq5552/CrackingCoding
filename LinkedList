@@ -1,0 +1,218 @@
+The following are helper methods for all coding problems in this chapter
+
+package helper.linkedlist;
+
+import java.util.Arrays;
+
+public class LinkedListHelper {
+	
+	public static LinkedListNode createSinglyLinkedList (Object[] dataArray) {
+		String[] strArray = Arrays.copyOf(dataArray, dataArray.length, String[].class);
+		LinkedListNode head = new LinkedListNode(strArray[0]);
+		LinkedListNode headNode = head;
+		for (int i = 1; i < dataArray.length; ++i) {
+			LinkedListNode next = new LinkedListNode(dataArray[i]);
+			head.mNext = next;
+			head = next;
+		}
+		head.mNext = null;
+		return headNode;
+	}
+	
+	public static void printList (LinkedListNode n) {
+		System.out.println("Printing the singly linked list items: ");
+		while (n != null) {
+			System.out.println(n.mData);
+			n = n.mNext;
+		}
+	}
+	
+	public static void printNode (LinkedListNode node) {
+		System.out.println("Node is: " + node.mData.toString());
+	};
+}
+
+package helper.linkedlist;
+
+public class LinkedListNode {
+	public LinkedListNode mNext;
+	public Object mData;
+	
+	public LinkedListNode (Object data) {
+		mData = data;
+	}
+}
+
+
+Question 2.1: Write code to remove duplicates from an unsorted linked list.
+How would you solve this problem if a temporary buffer is not allowed?
+
+package removeDup;
+
+import helper.linkedlist.LinkedListHelper;
+import helper.linkedlist.LinkedListNode;
+
+import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
+
+public class RemoveDupNodes {
+	public static void main (String[] args) {
+		Object[] dataArray = {"a", "b", "C", "c2", "3", "c", "b"};
+		LinkedListNode head = LinkedListHelper.createSinglyLinkedList(dataArray);
+		removeDups(head);	
+		LinkedListHelper.printList(head);
+		
+		Object[] dataArray1 = {"a", "b", "c", "c2", "3", "c", "b"};
+		head = LinkedListHelper.createSinglyLinkedList(dataArray1);
+		removeDupsWithoutBuffer(head);
+		LinkedListHelper.printList(head);
+	}
+	
+	static void removeDups (LinkedListNode n) {
+		Hashtable table = new Hashtable();
+		LinkedListNode prev = null;
+		
+		while (n != null) {
+			if (table.containsKey(n.mData)) {
+				prev.mNext = n.mNext;
+			} else {
+				table.put(n.mData, true);
+				prev = n;
+			}
+			
+			n = n.mNext;
+		}
+	}
+	
+	static void removeDupsWithoutBuffer (LinkedListNode n) {
+		if (n == null) return;
+		
+		LinkedListNode current = n;
+		while (current != null) {
+			LinkedListNode runner = current;
+			
+			while (runner.mNext != null) {
+				if (runner.mNext.mData == current.mData) {
+					runner.mNext = runner.mNext.mNext;
+				} else {
+					runner = runner.mNext;
+				}
+			}
+			current = current.mNext;
+		}
+	}
+
+}
+
+
+Question 2.2: Implement an algorithm to find the kth to last element of a singly linked list.
+
+package kth2last;
+
+public class IntWrapper {
+	public int value = 0;
+}
+
+
+package kth2last;
+
+import helper.linkedlist.LinkedListHelper;
+import helper.linkedlist.LinkedListNode;
+
+public class FindKth2Last {
+
+	public static void main (String[] args) {
+		Object[] dataArray = {"a", "b", "C", "c2", "3", "c", "b"};
+		LinkedListNode head = LinkedListHelper.createSinglyLinkedList(dataArray);
+		final int KTH_2_LAST = 3;
+		printKth2Last(head, KTH_2_LAST);	
+		IntWrapper i = new IntWrapper();
+		LinkedListNode node = printKth2LastWithWrapper(head, KTH_2_LAST, i);
+		LinkedListHelper.printNode(node);
+		node = printKth2LastIter(head, KTH_2_LAST);
+		LinkedListHelper.printNode(node);
+		
+	}
+	
+	// Both recursive solution takes O(n) space
+	// Approach A: instead of returning the element, print the kth to last element
+	static int printKth2Last (LinkedListNode head, int k) {
+		if (head == null) {
+			return 0;
+		}
+		
+		int counter = printKth2Last(head.mNext, k) + 1;
+		if (counter == k) {
+			System.out.println("The kth to the last element is: " + head.mData);
+		}
+		return counter;
+	}
+	
+	// Approach B: use a wrapper class to mimic passing by reference of a counter value
+	// that keeps track of what node we are at
+	static LinkedListNode printKth2LastWithWrapper (LinkedListNode head, int k, IntWrapper i) {
+		if (head == null) 
+			return null;
+		
+		LinkedListNode node = printKth2LastWithWrapper(head.mNext, k, i);
+		i.value += 1;
+		if (i.value == k) {
+			return head;
+		}
+		return node;
+	}
+	
+	// Approach C: have two pointers walk the list k - 1 steps apart; when one reaches
+	// the end, then the other one reaches length - k, assuming length unknown
+	public static LinkedListNode printKth2LastIter (LinkedListNode head, int k) {
+		if (k <= 0 || head == null) return null;
+		
+		LinkedListNode p1 = head;
+		LinkedListNode p2 = head;
+		
+		for (int i = 0; i < k - 1; ++i) {
+			if (p1 == null) return null;
+			p1 = p1.mNext;
+		}
+		
+		while (p1.mNext != null) {
+			p1 = p1.mNext;
+			p2 = p2.mNext;
+		}
+		
+		return p2;
+	}
+}
+
+
+Question 2.3: Implement an algorithm to delete a node in the middle of a singly linked list, given
+only access to that node
+
+package removeDup;
+
+import kth2last.FindKth2Last;
+import helper.linkedlist.LinkedListHelper;
+import helper.linkedlist.LinkedListNode;
+
+public class RemoveNode {
+	public static void main (String[] args) {
+		Object[] dataArray = {"a", "b", "C", "c2", "3", "c", "b"};
+		LinkedListNode head = LinkedListHelper.createSinglyLinkedList(dataArray);
+		final int KTH_2_LAST = 3;
+		LinkedListNode node = FindKth2Last.printKth2LastIter(head, KTH_2_LAST);	
+		System.out.println("Before: ");
+		LinkedListHelper.printList(head);
+		removeNode(node);
+		System.out.println("After: ");
+		LinkedListHelper.printList(head);
+	}
+	
+	static boolean removeNode (LinkedListNode node) {
+		if (node == null || node.mNext == null)
+			return false; // failed to remove, set this to dummy node
+		
+		node.mData = node.mNext.mData;
+		node.mNext = node.mNext.mNext;
+		return true;
+	}
+}
+
