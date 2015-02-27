@@ -1,3 +1,7 @@
+/*
+ * Question 2.2: Implement an algorithm to find the kth to last 
+ * element of a singly linked list.
+ */
 package kth2last;
 
 import helper.linkedlist.LinkedList;
@@ -21,7 +25,7 @@ public class FindKth2Last {
 	
 	// Both recursive solution takes O(n) space
 	// Approach A: instead of returning the element, print the kth to last element
-	static int printKth2Last (LinkedListNode head, int k) {
+	public static int printKth2Last (LinkedListNode head, int k) {
 		if (head == null) {
 			return 0;
 		}
@@ -35,7 +39,7 @@ public class FindKth2Last {
 	
 	// Approach B: use a wrapper class to mimic passing by reference of a counter value
 	// that keeps track of what node we are at
-	static LinkedListNode findKth2LastWithWrapper (LinkedListNode head, int k, IntWrapper i) {
+	public static LinkedListNode findKth2LastWithWrapper (LinkedListNode head, int k, IntWrapper i) {
 		if (head == null) 
 			return null;
 		

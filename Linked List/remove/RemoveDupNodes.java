@@ -1,4 +1,10 @@
-package removeDup;
+/*
+ * Question 2.1: Write code to remove duplicates from an unsorted 
+ * linked list. How would you solve this problem if a temporary buffer 
+ * is not allowed?
+ */
+
+package remove;
 
 import helper.linkedlist.LinkedList;
 import helper.linkedlist.LinkedListNode;
@@ -17,6 +23,7 @@ public class RemoveDupNodes {
 		removeDupsWithoutBuffer(l1.mHead);
 		l1.print();
 	}
+	
 	
 	static void removeDups (LinkedListNode n) {
 		Hashtable table = new Hashtable();

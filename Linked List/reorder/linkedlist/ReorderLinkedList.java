@@ -1,3 +1,8 @@
+/*
+ * Question 2.4: Write code to partition a linked list around a 
+ * value x, such that all nodes less than x come before all 
+ * nodes greater than or equal to x
+ */
 package reorder.linkedlist;
 
 import helper.linkedlist.*;
@@ -14,6 +19,7 @@ public class ReorderLinkedList {
 		LinkedListNode newHead1 = reorderWithLessSpace(newHead, x);
 		LinkedList.print(newHead1);
 	}
+
 	
 	// Approach A: use two separate lists to keep track of before and after elms,
 	// and then merge the two

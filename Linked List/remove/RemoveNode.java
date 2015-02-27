@@ -1,4 +1,9 @@
-package removeDup;
+/*
+ * Question 2.3: Implement an algorithm to delete a node in the 
+ * middle of a singly linked list, given only access to that node
+ */
+
+package remove;
 
 import kth2last.FindKth2Last;
 import helper.linkedlist.LinkedList;
@@ -17,6 +22,7 @@ public class RemoveNode {
 		System.out.println("List after: ");
 		LinkedList.print(head);
 	}
+
 	
 	static boolean removeNode (LinkedListNode node) {
 		if (node == null || node.mNext == null)
